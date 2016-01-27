@@ -4,8 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var dbConfig = require('./routes/db');
+
+mongoose.connect(dbConfig.url);
 
 var routes = require('./routes/index');
+var signup=require('./routes/signup');
 
 
 var app = express();
@@ -23,6 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
+app.post('/signup',signup.addUser);
 
 
 // catch 404 and forward to error handler
